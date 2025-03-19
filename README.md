@@ -82,5 +82,59 @@ Successfully enrolled the Elastic Agent.
 Elastic Agent has been successfully installed.
 ```
 
+### Step 8 Install packetbeat and configure
+``` bash
+sudo apt update
+sudo apt install packetbeat
+```
+##### Add username, password and host to /etc/packetbeat/packetbeat.yml
+``` yaml
+output.elasticsearch:
+  # Array of hosts to connect to.
+  #hosts: ["localhost:9200"]
+  hosts: ["https://64csaf01a76666eggdgaad99a7253b.us-east-2.aws.elastic-cloud.com:443"]
+  username: "elastic"
+  password: "O2pCx7HregergewerIzxKwy"
+``` 
+##### Test:
+``` bash
+sudo packetbeat test config -c /etc/packetbeat/packetbeat.yml
+Config OK
+```
+
+``` bash
+sudo packetbeat test output
+elasticsearch: https://64cfgrg1a701b419theherh345sfsdf48bfb3aad99a7253b.us-east-2.aws.elastic-cloud.com:443...
+  parse url... OK
+  connection...
+    parse host... OK
+    dns lookup... OK
+    addresses: 3.20.15.202, 3.133.83.227, 18.224.99.228
+    dial up... OK
+  TLS...
+    security: server's certificate chain verification is enabled
+    handshake... OK
+    TLS version: TLSv1.3
+    dial up... OK
+  talk to server... OK
+  version: 8.17.3
+  ```
+##### Restart packetbeat
+```bash
+sudo systemctl restart packetbeat
+```
+##### Index checking
+![alt text](image-1.png)
+
+### Step 9 Create a new rule
 
 
+Rule name - Spam Email Detection
+
+event.dataset: "packetbeat.http" AND (http.url: "info@4v27kq5y.yzpczndkeyuf.com" OR http.url: "info@innovativebranddesign.nl" OR http.url: "info@4p7x0s5euy.unexpectedtechfusion.co.uk")
+
+[KQL-Rule](query.json)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)

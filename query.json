@@ -1,0 +1,96 @@
+{
+    "aggs": {},
+    "_source": {
+        "excludes": []
+    },
+    "query": {
+        "bool": {
+            "must": [],
+            "filter": [
+                {
+                    "bool": {
+                        "filter": [
+                            {
+                                "bool": {
+                                    "should": [
+                                        {
+                                            "match_phrase": {
+                                                "event.dataset": "packetbeat.http"
+                                            }
+                                        }
+                                    ],
+                                    "minimum_should_match": 1
+                                }
+                            },
+                            {
+                                "bool": {
+                                    "should": [
+                                        {
+                                            "bool": {
+                                                "should": [
+                                                    {
+                                                        "match_phrase": {
+                                                            "http.url": "info@4v27kq5y.yzpczndkeyuf.com"
+                                                        }
+                                                    }
+                                                ],
+                                                "minimum_should_match": 1
+                                            }
+                                        },
+                                        {
+                                            "bool": {
+                                                "should": [
+                                                    {
+                                                        "match_phrase": {
+                                                            "http.url": "info@innovativebranddesign.nl"
+                                                        }
+                                                    }
+                                                ],
+                                                "minimum_should_match": 1
+                                            }
+                                        },
+                                        {
+                                            "bool": {
+                                                "should": [
+                                                    {
+                                                        "match_phrase": {
+                                                            "http.url": "info@4p7x0s5euy.unexpectedtechfusion.co.uk"
+                                                        }
+                                                    }
+                                                ],
+                                                "minimum_should_match": 1
+                                            }
+                                        }
+                                    ],
+                                    "minimum_should_match": 1
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "range": {
+                        "timestamp": {
+                            "format": "strict_date_optional_time",
+                            "gte": "2025-03-19T16:21:24.125Z",
+                            "lte": "2025-03-19T16:31:24.125Z"
+                        }
+                    }
+                }
+            ],
+            "should": [],
+            "must_not": []
+        }
+    },
+    "stored_fields": [
+        "*"
+    ],
+    "runtime_mappings": {},
+    "script_fields": {},
+    "fields": [
+        {
+            "field": "timestamp",
+            "format": "date_time"
+        }
+    ]
+}
